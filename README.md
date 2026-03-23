@@ -1,46 +1,47 @@
 # Zero Impression Cleaner
 
-Google Ads Script to automate your workflow.  
-Script Google Ads pour automatiser votre gestion SEA.  
+A Google Ads Script that identifies keywords with zero impressions over a configurable lookback window and pauses them to keep your account clean.
 
----
-## 🌍 Languages | Langues
-- 🇬🇧 English version → below  
-- 🇫🇷 Version française → plus bas  
+## What It Does
 
----
+- Finds enabled keywords in enabled ad groups and campaigns with zero impressions
+- Pauses them and applies a label for easy filtering and recovery
+- Sends an email notification with the count and a sample of paused keywords
+- Configurable minimum keyword age to avoid pausing newly added keywords
 
-# 🇬🇧 English: Zero Impression Cleaner
+## Setup
 
-## 🎯 What it does
-Keep your account healthy and improve Quality Score by automatically pausing long-forgotten, dead keywords.
-- **Keywords/SEO:** nettoyer mots clés google ads script, script google ads zero impression pause, google ads account hygiene automation
+1. In Google Ads, go to **Tools & Settings > Bulk Actions > Scripts**
+2. Paste the contents of `main_en.gs` (or `main_fr.gs` for French)
+3. Update the `CONFIG` values
+4. Set `TEST_MODE` to `false` when ready
+5. Schedule the script weekly
 
-## ⚙️ Setup
-1. In **Google Ads → Tools & settings → Scripts → New script**.
-2. Paste the content of `main_en.gs`.
-3. Set `TEST_MODE = true` for safety, then preview.
+## CONFIG Reference
 
----
+| Parameter              | Type    | Default                  | Description                                          |
+|------------------------|---------|--------------------------|------------------------------------------------------|
+| `TEST_MODE`            | Boolean | `true`                   | When true, counts but does not pause                 |
+| `NOTIFICATION_EMAIL`   | String  | —                        | Email for the pausing report                         |
+| `LOOKBACK_WINDOW`      | String  | `LAST_30_DAYS`           | Date range to check for zero impressions             |
+| `LABEL_NAME`           | String  | `Paused_Zero_Impression` | Label applied to paused keywords                     |
+| `MIN_KEYWORD_AGE_DAYS` | Number  | `14`                     | Minimum keyword age — younger ones are skipped       |
 
-# 🇫🇷 Français : Zero Impression Cleaner
+## How It Works
 
-## 🎯 Ce que fait le script
-Les comptes des PME sont souvent remplis de mots-clés inactifs. Ce script les met en pause automatiquement pour garder un compte propre.
-- **Mots-clés/SEO :** nettoyer mots clés google ads script, script google ads zero impression pause, google ads account hygiene automation
+1. Queries all enabled keywords with zero impressions in the lookback window
+2. Applies tracking label and pauses each keyword
+3. Sends email with total count and sample list
 
-## ⚙️ Installation
-1. Dans **Google Ads → Outils & paramètres → Scripts → Nouveau script**.
-2. Collez le contenu de `main_fr.gs`.
-3. Paramétrez `TEST_MODE = true` par sécurité, puis Prévisualiser.
+## Recovering Paused Keywords
 
----
-## 👤 Author | Auteur
-**Thibault Fayol – Consultant SEA PME**  
-🔗 Website: [https://thibaultfayol.com](https://thibaultfayol.com)  
+Filter by label `Paused_Zero_Impression` in Google Ads, select and re-enable.
 
-💡 *Votre compte est empâté ? Confiez-moi la restructuration pour ne garder que ce qui convertit.* | *Account feeling bloated? Let me restructure it to keep only what converts.*
+## Requirements
 
----
-## 📄 License | Licence
-MIT
+- Google Ads account with Search campaigns
+- Google Ads Scripts access
+
+## License
+
+MIT — Thibault Fayol Consulting
